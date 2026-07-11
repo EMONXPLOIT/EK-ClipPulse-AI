@@ -36,3 +36,8 @@
 
 ```bash
 git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git](https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git) && cd EK-ClipPulse-AI && pip install streamlit fastapi uvicorn websockets google-generativeai youtube-transcript-api websocket-client && streamlit run app.py
+---
+<p align="center">
+  <b>Developed by EMON ROOTX</b><br>
+  <i>"Automating insights, redefining content creation."</i>
+</p>
