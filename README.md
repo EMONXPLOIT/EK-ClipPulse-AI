@@ -37,7 +37,7 @@
 
 ```bash
 # ১. প্রজেক্ট ডাউনলোড করুন
-git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git](https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git)
+git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git(https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git)
 
 # ২. প্রজেক্টের ফোল্ডারে ঢুকুন
 cd EK-ClipPulse-AI
