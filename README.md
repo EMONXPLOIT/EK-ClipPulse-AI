@@ -18,7 +18,7 @@
 
 ---
 
-## 🇧🇩 প্রজেক্টের পরিচিতি (Project Overview)
+## 🇧🇩 প্রজেক্টের পরিচিতি (বাংলায়)
 
 **EK-ClipPulse AI** হলো কন্টেন্ট ক্রিয়েটর এবং ভিডিও এডিটরদের জন্য তৈরি একটি প্রিমিয়াম অটোমেটেড এআই অ্যাসিস্ট্যান্ট। এটি ২ ঘণ্টারও বেশি বড় যেকোনো ইউটিউব ভিডিওর সাবটাইটেল (Transcript) এবং অডিও ডেটা সেকেন্ডের মধ্যে প্রসেস করে। এরপর **Gemini 1.5 Flash API** এর ডিপ-লার্নিং অ্যালগরিদম ব্যবহার করে স্ক্রিপ্ট থেকে সবচেয়ে বেশি ভাইরাল হওয়ার মতো (High-Engagement), মজার বা শিক্ষণীয় ৩টি সেরা ভাইরাল ক্লিপ (Shorts/TikTok/Reels) স্বয়ংক্রিয়ভাবে খুঁজে বের করে। 
 
@@ -26,20 +26,18 @@
 
 ---
 
-## 🔥 মূল আকর্ষণ ও ফিচারসমূহ (Key Features)
+## 🇬🇧 Project Overview (English)
 
-* 🧠 **Gemini 1.5 Flash Engine:** লং-কনটেক্সট এআই মডেল যা পুরো স্ক্রিপ্ট স্ক্যান করে নিখুঁত ভাইরাল মোমেন্ট ও হুক প্রেডিক্ট করে।
-* 📡 **Real-Time WebSocket Sync:** কোনো ল্যাগ বা বাফারিং ছাড়াই স্ক্রিনে লাইভ স্ট্যাটাস এবং প্রোগ্রেস বার আপডেট।
-* ⏱️ **Smart Iframe Player:** এআই-এর সিলেক্ট করা সুনির্দিষ্ট টাইমস্ট্যাম্প (যেমন: ৩:২৫ সেকেন্ড) থেকে সরাসরি ভিডিও প্লে করার সুবিধা।
-* 📊 **Viral Analysis:** প্রতিটি ক্লিপ কেন ভাইরাল হবে তার একটি নিখুঁত কন্টেন্ট মার্কেটিং অ্যানালাইসিস বাংলায় প্রদর্শন করে।
-* 👑 **Emon Khan Premium UI:** চমৎকার গ্লোয়িং নিওন ডার্ক থিম সম্বলিত রেসপন্সিভ ওয়েব ইন্টারফেস।
+**EK-ClipPulse AI** is an advanced, high-performance AI video insights platform designed for modern digital content creators. It autonomously streams and parses subtitles from YouTube videos lasting up to several hours. By integrating the **Gemini 1.5 Flash LLM**, the system predicts and pinpoints the top 3 highly engaging moments tailored for TikTok, YouTube Shorts, and Instagram Reels. 
+
+The underlying engine utilizes a full asynchronous **FastAPI WebSocket** system paired with an elegant, responsive **Streamlit UI** dashboard.
 
 ---
 
-## 🚀 কীভাবে রান করবেন? (Super Easy Installation)
+## 🚀 কীভাবে রান করবেন? / How to Setup & Run
 
-বাংলাদেশের যেকোনো প্রান্ত থেকে যে কেউ যেন কোনো ঝামেলা ছাড়াই **১-ক্লিকে** এই প্রজেক্টটি রান করতে পারেন, তার জন্য নিচে সহজ গাইড দেওয়া হলো। টার্মিনাল বা সিএমডিতে (Terminal/CMD) কোডগুলো একে একে কপি করে রান করুন:
+বাংলাদেশের যেকোনো প্রান্ত থেকে বা বিশ্বজুড়ে যে কেউ যেন কোনো ঝামেলা ছাড়াই **১-ক্লিকে কপি করে** এই প্রজেক্টটি রান করতে পারেন, তার জন্য নিচে সম্পূর্ণ ক্লিন কমান্ড গাইড দেওয়া হলো। টার্মিনাল বা সিএমডিতে (Terminal/CMD) কোডগুলো একে একে কপি করে পেস্ট করে এন্টার দিন:
 
-### 📥 ১. প্রজেক্টটি আপনার পিসিতে ডাউনলোড (Clone) করুন
+### 📥 1. Clone the Project / প্রজেক্টটি পিসিতে ডাউনলোড করুন
 ```bash
 git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git](https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git)
