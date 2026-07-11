@@ -1,0 +1,204 @@
+# ==========================================================
+# ⚡ BRAND: EK-CLIPPULSE AI SYSTEM
+# 👑 OWNER & DEVELOPER: EMON KHAN
+# 🛠️ ARCHITECTURE: FASTAPI + WEBSOCKETS + STREAMLIT (SINGLE-FILE OS)
+# ==========================================================
+
+import streamlit as st
+import google.generativeai as genai
+from youtube_transcript_api import YouTubeTranscriptApi
+from fastapi import FastAPI, WebSocket
+import uvicorn
+import json
+import re
+import asyncio
+import threading
+import websocket  # pip install websocket-client
+
+# ----------------------------------------------------------
+# ১. FASTAPI & WEBSOCKET BACKEND SYSTEM
+# ----------------------------------------------------------
+backend_app = FastAPI()
+
+def extract_video_id(url):
+    regex = r"(?:v=|\/)([0-9A-Za-z_-]{11}).*"
+    match = re.search(regex, url)
+    return match.group(1) if match else None
+
+def get_transcript(video_id):
+    try:
+        transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['bn', 'en'])
+        return "".join([f"[{t['start']:.2f}s]: {t['text']}\n" for t in transcript_list])
+    except:
+        return None
+
+@backend_app.websocket("/ws/analyze")
+async def websocket_endpoint(websocket_server: WebSocket):
+    await websocket_server.accept()
+    try:
+        # ফ্রন্টএন্ড থেকে আসা ডেটা গ্রহণ
+        data = await websocket_server.receive_text()
+        payload = json.loads(data)
+        video_url = payload.get("url")
+        api_key = payload.get("api_key")
+        
+        await websocket_server.send_json({"status": "processing", "progress": 15, "message": "🤖 [EK-CORE] ইনপুট ডেটা ভ্যালিডেশন চেক করা হচ্ছে..."})
+        await asyncio.sleep(0.5)
+        
+        video_id = extract_video_id(video_url)
+        if not video_id:
+            await websocket_server.send_json({"status": "error", "message": "❌ ভুল লিঙ্ক! সঠিক ইউটিউব ভিডিও ইউআরএল দিন।"})
+            return
+            
+        await websocket_server.send_json({"status": "processing", "progress": 40, "message": "📡 [EK-CORE] ভিডিও থেকে সাবটাইটেল এক্সট্রাক্ট করা হচ্ছে..."})
+        transcript = get_transcript(video_id)
+        
+        if not transcript:
+            await websocket_server.send_json({"status": "error", "message": "⚠️ এই ভিডিওতে কোনো সাবটাইটেল পাওয়া যায়নি! অন্য ভিডিও ট্রাই করুন।"})
+            return
+            
+        await websocket_server.send_json({"status": "processing", "progress": 70, "message": "🧠 [EK-CORE] Gemini 1.5 এআই ইঞ্জিনের সাথে যোগাযোগ স্থাপন করা হচ্ছে..."})
+        
+        # Gemini AI Setup
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        
+        prompt = f"""
+        You are an expert viral video growth hacker. Analyze this transcript and return exactly 3 highly engaging segments (30-60s) perfect for TikTok/Shorts.
+        Return raw JSON only, no markdown format like ```json.
+        JSON format structure:
+        [
+          {{"start_time": float, "end_time": float, "duration": int, "reason": "Explain in Bengali why this part will go viral", "hook_title": "Catchy Bengali Short Title"}}
+        ]
+        Transcript:
+        {transcript[:40000]}
+        """
+        
+        await websocket_server.send_json({"status": "processing", "progress": 90, "message": "⚡ [EK-CORE] Gemini AI ভিডিওর সেরা ৩টি ভাইরাল মোメント প্রেডিক্ট করছে..."})
+        
+        response = model.generate_content(prompt)
+        clean_text = response.text.replace("```json", "").replace("```", "").strip()
+        results = json.loads(clean_text)
+        
+        # সফল রেসপন্স
+        await websocket_server.send_json({
+            "status": "success", 
+            "progress": 100, 
+            "message": "🔥 [EK-CORE] অ্যানালাইসিস সম্পূর্ণ সফল!", 
+            "video_id": video_id,
+            "data": results
+        })
+        
+    except Exception as e:
+        await websocket_server.send_json({"status": "error", "message": f"💥 সিস্টেম এরর: {str(e)}"})
+    finally:
+        await websocket_server.close()
+
+# ব্যাকএন্ড সার্ভারকে আলাদা থ্রেডে ব্যাকগ্রাউন্ডে রান করার ফাংশন
+def run_backend():
+    uvicorn.run(backend_app, host="127.0.0.1", port=8432, log_level="error")
+
+if not hasattr(st, "backend_started"):
+    st.backend_started = True
+    threading.Thread(target=run_backend, daemon=True).start()
+
+# ----------------------------------------------------------
+# ২. STREAMLIT FRONTEND & BRANDING UI
+# ----------------------------------------------------------
+st.set_page_config(page_title="EK-ClipPulse AI", page_icon="⚡", layout="wide")
+
+# 👑 EMON KHAN এর স্পেশাল প্রিমিয়াম ব্র্যান্ডিং ব্যানার (ডার্ক গোল্ডেন নিওন থিম)
+st.markdown("""
+    <div style="background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); 
+                padding: 30px; border-radius: 15px; text-align: center; 
+                box-shadow: 0px 4px 20px rgba(0, 242, 254, 0.2); border: 2px solid #00f2fe; margin-bottom: 30px;">
+        <h1 style="margin: 0; font-size: 42px; font-weight: 900; letter-spacing: 3px; color: #ffffff; text-shadow: 0 0 10px #00f2fe;">
+            ⚡ EK-CLIPPULSE AI
+        </h1>
+        <p style="margin: 8px 0 0 0; font-size: 18px; color: #00f2fe; font-style: italic; font-weight: 500;">
+            Next-Generation Autonomous Video Hook & Shorts Sniper
+        </p>
+        <hr style="border: 0.5px solid rgba(0,242,254,0.3); width: 50%; margin: 15px auto;">
+        <div style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ffb300;">
+            👑 DEVELOPED & BRANDED BY EMON KHAN 👑
+        </div>
+    </div>
+""", unsafe_style_allowed=True)
+
+# সাইডবার কনফিগারেশন
+st.sidebar.markdown("### 🛠️ System Control Panel")
+api_key = st.sidebar.text_input("Enter Gemini API Key:", type="password")
+st.sidebar.markdown("---")
+st.sidebar.info("💡 এই ড্যাশবোর্ডটি সরাসরি ব্যাকএন্ড WebSocket সার্ভারের (Port: 8432) সাথে যুক্ত।")
+
+# মূল ইনপুট ফর্ম
+video_url = st.text_input("🔗 আপনার বড় ইউটিউব ভিডিওর লিঙ্কটি edin:", placeholder="[https://www.youtube.com/watch?v=](https://www.youtube.com/watch?v=)...")
+
+if st.button("LAUNCH EMON KHAN AI PULSE 🚀", use_container_width=True):
+    if not api_key or not video_url:
+        st.error("🚨 দয়া করে সাইডবারে Gemini API Key এবং মেইন বক্সে ভিডিওর লিঙ্ক দুটোই সাবমিট করুন।")
+    else:
+        # রিয়েল-টাইম লাইভ ট্র্যাকার এরিয়া
+        progress_bar = st.progress(0)
+        status_log = st.empty()
+        
+        try:
+            # লোকাল ব্যাকএন্ড ওয়েব সকেটের সাথে কানেকশন তৈরি
+            ws = websocket.WebSocket()
+            ws.connect("ws://127.0.0.1:8432/ws/analyze")
+            
+            # সার্ভারে ডেটা পাঠানো হচ্ছে
+            ws.send(json.dumps({"url": video_url, "api_key": api_key}))
+            
+            while True:
+                response = ws.recv()
+                if not response:
+                    break
+                
+                res_data = json.loads(response)
+                
+                # লাইভ আপডেট শো করা ইউজার ইন্টারফেসে
+                if "progress" in res_data:
+                    progress_bar.progress(res_data["progress"])
+                if "message" in res_data:
+                    status_log.markdown(f"`{res_data['message']}`")
+                    
+                # সাকসেস হলে রেজাল্ট গ্রিড তৈরি করা
+                if res_data["status"] == "success":
+                    st.balloons()
+                    status_log.empty()
+                    progress_bar.empty()
+                    
+                    st.markdown("### 🎯 Emon Khan AI Engine সাজেস্টেড শর্টস মোメントসমূহ:")
+                    
+                    clips = res_data["data"]
+                    video_id = res_data["video_id"]
+                    
+                    col1, col2, col3 = st.columns(3)
+                    cols = [col1, col2, col3]
+                    
+                    for index, item in enumerate(clips):
+                        if index < 3:
+                            with cols[index]:
+                                st.markdown(f"""
+                                    <div style="background: #1e293b; padding: 20px; border-radius: 10px; 
+                                                border-top: 4px solid #ffb300; min-height: 200px; color: #f8fafc; margin-bottom: 15px;">
+                                        <h4 style="margin:0 0 10px 0; color:#00f2fe;">🔥 ক্লিপ {index+1}: {item['hook_title']}</h4>
+                                        <p style="font-size:13px; color:#94a3b8; margin: 5px 0;">⏱️ ডুরেশন: <b>{item['duration']} সেকেন্ড</b></p>
+                                        <p style="font-size:14px; margin-top:10px; font-weight:600; color:#ffb300;">🎯 ভাইরাল লজিক:</p>
+                                        <p style="font-size:13px; color:#cbd5e1; font-style:italic; line-height:1.4;">{item['reason']}</p>
+                                    </div>
+                                """, unsafe_style_allowed=True)
+                                
+                                # নির্দিষ্ট টাইমস্ট্যাম্প থেকে ভিডিও প্লে করার ফ্রেম
+                                start_sec = int(item['start_time'])
+                                embed_url = f"[https://www.youtube.com/embed/](https://www.youtube.com/embed/){video_id}?start={start_sec}"
+                                st.components.v1.iframe(embed_url, height=240)
+                    break
+                    
+                elif res_data["status"] == "error":
+                    st.error(res_data["message"])
+                    break
+                    
+        except Exception as e:
+            st.error(f"❌ ব্যাকএন্ড ও ক্রোর সার্ভারের সাথে লাইভ সকেট কানেক্ট করা যায়নি। এরর: {e}")
