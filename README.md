@@ -34,4 +34,6 @@
 
 নিচের বক্সে থাকা পুরো কোডটি **একবারে এক ক্লিকে কপি করুন**। তারপর আপনার কম্পিউটারের টার্মিনাল বা সিএমডিতে (Terminal/CMD) পেস্ট করে জাস্ট এন্টার চাপুন। পুরো প্রজেক্ট অটোমেটিক ডাউনলোড, ইনস্টল এবং রান হয়ে ব্রাউজারে ওপেন হয়ে যাবে!
 
-git clone https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git && cd EK-ClipPulse-AI && pip install streamlit fastapi uvicorn websockets google-generativeai youtube-transcript-api websocket-client && streamlit run app.py
+
+```bash
+git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git](https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git) && cd EK-ClipPulse-AI && pip install streamlit fastapi uvicorn websockets google-generativeai youtube-transcript-api websocket-client && streamlit run app.py
