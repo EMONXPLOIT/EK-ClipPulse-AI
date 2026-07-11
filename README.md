@@ -42,5 +42,8 @@ git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git](https://github.com
 # ২. প্রজেক্টের ফোল্ডারে ঢুকুন
 cd EK-ClipPulse-AI
 
-# ৩. লাইব্রেরি ইনস্টল করুন এবং অ্যাপ রান করুন
-pip install streamlit fastapi uvicorn websockets google-generativeai youtube-transcript-api websocket-client && streamlit run app.py
+# ③. প্রয়োজনীয় লাইব্রেরি ইনস্টল করুন
+pip install streamlit fastapi uvicorn websockets google-generativeai youtube-transcript-api websocket-client
+
+# ৪. এআই সিস্টেমটি চালু করুন
+streamlit run app.py
