@@ -22,22 +22,17 @@
 
 **EK-ClipPulse AI** হলো কন্টেন্ট ক্রিয়েটর এবং ভিডিও এডিটরদের জন্য তৈরি একটি প্রিমিয়াম অটোমেটেড এআই অ্যাসিস্ট্যান্ট। এটি ২ ঘণ্টারও বেশি বড় যেকোনো ইউটিউব ভিডিওর সাবটাইটেল (Transcript) এবং অডিও ডেটা সেকেন্ডের মধ্যে প্রসেস করে। এরপর **Gemini 1.5 Flash API** এর ডিপ-লার্নিং অ্যালগরিদম ব্যবহার করে স্ক্রিপ্ট থেকে সবচেয়ে বেশি ভাইরাল হওয়ার মতো (High-Engagement), মজার বা শিক্ষণীয় ৩টি সেরা ভাইরাল ক্লিপ (Shorts/TikTok/Reels) স্বয়ংক্রিয়ভাবে খুঁজে বের করে। 
 
-ব্যাকএন্ডে **FastAPI WebSockets** আর্কিটেকচার ব্যবহার করায় অ্যাপটি রান করার সময় স্ক্রিনে লাইভ প্রোগ্রেস ও স্ট্যাটাস ট্র্যাকিং দেখা যায়।
-
 ---
 
 ## 🇬🇧 Project Overview (English)
 
-**EK-ClipPulse AI** is an advanced, high-performance AI video insights platform designed for modern digital content creators. It autonomously streams and parses subtitles from YouTube videos lasting up to several hours. By integrating the **Gemini 1.5 Flash LLM**, the system predicts and pinpoints the top 3 highly engaging moments tailored for TikTok, YouTube Shorts, and Instagram Reels. 
-
-The underlying engine utilizes a full asynchronous **FastAPI WebSocket** system paired with an elegant, responsive **Streamlit UI** dashboard.
+**EK-ClipPulse AI** is an advanced, high-performance AI video insights platform designed for modern digital content creators. It autonomously streams and parses subtitles from YouTube videos lasting up to several hours. By integrating the **Gemini 1.5 Flash LLM**, the system predicts and pinpoints the top 3 highly engaging moments tailored for TikTok, YouTube Shorts, and Instagram Reels.
 
 ---
 
-## 🚀 কীভাবে রান করবেন? / How to Setup & Run
+## 🚀 ১-ক্লিকে ইনস্টল এবং রান করার কমান্ড (All-in-One Execution Code)
 
-বাংলাদেশের যেকোনো প্রান্ত থেকে বা বিশ্বজুড়ে যে কেউ যেন কোনো ঝামেলা ছাড়াই **১-ক্লিকে কপি করে** এই প্রজেক্টটি রান করতে পারেন, তার জন্য নিচে সম্পূর্ণ ক্লিন কমান্ড গাইড দেওয়া হলো। টার্মিনাল বা সিএমডিতে (Terminal/CMD) কোডগুলো একে একে কপি করে পেস্ট করে এন্টার দিন:
+নিচের বক্সে থাকা পুরো কোডটি **একবারে এক ক্লিকে কপি করুন**। তারপর আপনার কম্পিউটারের টার্মিনাল বা সিএমডিতে (Terminal/CMD) পেস্ট করে জাস্ট এন্টার চাপুন। পুরো প্রজেক্ট অটোমেটিক ডাউনলোড, ইনস্টল এবং রান হয়ে ব্রাউজারে ওপেন হয়ে যাবে!
 
-### 📥 1. Clone the Project / প্রজেক্টটি পিসিতে ডাউনলোড করুন
 ```bash
-git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git](https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git)
+git clone [https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git](https://github.com/EMONXPLOIT/EK-ClipPulse-AI.git) && cd EK-ClipPulse-AI && pip install streamlit fastapi uvicorn websockets google-generativeai youtube-transcript-api websocket-client && streamlit run app.py
